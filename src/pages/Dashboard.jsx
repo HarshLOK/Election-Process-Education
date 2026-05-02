@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function Dashboard() {
   return (
@@ -134,25 +135,31 @@ function StatCard({ label, value, color }) {
   };
   
   return (
-    <div role="article" aria-label={`${label}: ${value}`} className={`p-5 border rounded-xl ${colors[color]} relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg`}>
-      <div className="font-display text-2xl font-bold z-10 relative drop-shadow-md">{value}</div>
-      <div className="font-mono text-[10px] text-muted tracking-wider mt-1 z-10 relative">{label}</div>
+    <div role="article" aria-label={`Statistic: ${label}, Value: ${value}`} tabIndex={0} className={`p-5 border rounded-xl ${colors[color]} relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-${color} focus:ring-opacity-50`}>
+      <div className="font-display text-2xl font-bold z-10 relative drop-shadow-md" aria-hidden="true">{value}</div>
+      <div className="font-mono text-[10px] text-muted tracking-wider mt-1 z-10 relative" aria-hidden="true">{label}</div>
     </div>
   );
 }
 
+StatCard.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.oneOf(["primary", "secondary", "accent"]).isRequired,
+};
+
 function JourneyCard({ phase, title, desc, link, color, disabled }) {
   const colorMap = {
-    primary: { text: "text-primary", bg: "bg-primary/10", border: "border-primary/30", hover: "hover:border-primary/60 hover:shadow-[0_0_20px_rgba(0,255,163,0.15)]" },
-    secondary: { text: "text-secondary", bg: "bg-secondary/10", border: "border-secondary/30", hover: "hover:border-secondary/60 hover:shadow-[0_0_20px_rgba(255,122,0,0.15)]" },
-    accent: { text: "text-accent", bg: "bg-accent/10", border: "border-accent/30", hover: "hover:border-accent/60 hover:shadow-[0_0_20px_rgba(77,163,255,0.15)]" }
+    primary: { text: "text-primary", bg: "bg-primary/10", border: "border-primary/30", hover: "hover:border-primary/60 hover:shadow-[0_0_20px_rgba(0,255,163,0.15)] focus:ring-primary" },
+    secondary: { text: "text-secondary", bg: "bg-secondary/10", border: "border-secondary/30", hover: "hover:border-secondary/60 hover:shadow-[0_0_20px_rgba(255,122,0,0.15)] focus:ring-secondary" },
+    accent: { text: "text-accent", bg: "bg-accent/10", border: "border-accent/30", hover: "hover:border-accent/60 hover:shadow-[0_0_20px_rgba(77,163,255,0.15)] focus:ring-accent" }
   };
   
   const c = colorMap[color];
   
   if (disabled) {
     return (
-      <div className="p-6 border border-white/5 bg-white/5 rounded-xl opacity-60">
+      <div className="p-6 border border-white/5 bg-white/5 rounded-xl opacity-60" aria-disabled="true" role="article">
         <div className="font-mono text-xs text-muted font-bold tracking-widest mb-2">PHASE {phase}</div>
         <h3 className="font-sans text-lg font-bold text-white/50 mb-2">{title}</h3>
         <p className="text-sm text-muted/70 mb-6">{desc}</p>
@@ -164,14 +171,23 @@ function JourneyCard({ phase, title, desc, link, color, disabled }) {
   }
 
   return (
-    <Link to={link} aria-label={`Start Phase ${phase}: ${title}`} className={`block p-6 border rounded-xl bg-card transition-all duration-300 ${c.border} ${c.hover} group relative overflow-hidden`}>
-      <div className="absolute -right-10 -top-10 w-32 h-32 bg-current opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
-      <div className={`font-mono text-xs font-bold tracking-widest mb-2 ${c.text}`}>PHASE {phase}</div>
-      <h3 className="font-sans text-xl font-bold text-white mb-2">{title}</h3>
-      <p className="text-sm text-muted mb-6">{desc}</p>
-      <div className={`inline-flex items-center gap-2 font-mono text-xs font-bold ${c.text} ${c.bg} px-3 py-1.5 rounded transition-transform group-hover:translate-x-1`}>
+    <Link to={link} aria-label={`Start Phase ${phase}: ${title}. ${desc}`} className={`block p-6 border rounded-xl bg-card transition-all duration-300 ${c.border} ${c.hover} group relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-opacity-50`}>
+      <div className="absolute -right-10 -top-10 w-32 h-32 bg-current opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity" aria-hidden="true"></div>
+      <div className={`font-mono text-xs font-bold tracking-widest mb-2 ${c.text}`} aria-hidden="true">PHASE {phase}</div>
+      <h3 className="font-sans text-xl font-bold text-white mb-2" aria-hidden="true">{title}</h3>
+      <p className="text-sm text-muted mb-6" aria-hidden="true">{desc}</p>
+      <div className={`inline-flex items-center gap-2 font-mono text-xs font-bold ${c.text} ${c.bg} px-3 py-1.5 rounded transition-transform group-hover:translate-x-1`} aria-hidden="true">
         START MODULE &rarr;
       </div>
     </Link>
   );
 }
+
+JourneyCard.propTypes = {
+  phase: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  link: PropTypes.string,
+  color: PropTypes.oneOf(["primary", "secondary", "accent"]).isRequired,
+  disabled: PropTypes.bool
+};

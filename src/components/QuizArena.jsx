@@ -144,21 +144,21 @@ export default function QuizArena() {
     <div className="p-8 md:p-12 max-w-4xl mx-auto h-full flex flex-col relative z-10">
       {/* Header Info */}
       <div className="flex justify-between items-center mb-12">
-        <div>
+        <div role="status" aria-live="polite">
           <div className="font-mono text-xs font-bold tracking-widest text-muted">LEVEL {question.level} OF 10</div>
-          <div className="w-32 h-1.5 bg-white/10 rounded-full mt-2 overflow-hidden">
+          <div className="w-32 h-1.5 bg-white/10 rounded-full mt-2 overflow-hidden" role="progressbar" aria-valuenow={currentLevel} aria-valuemin={0} aria-valuemax={10}>
             <div className="h-full bg-[#4DA3FF]" style={{ width: `${(currentLevel / QUIZ_QUESTIONS.length) * 100}%` }}></div>
           </div>
         </div>
-        <div className="text-right">
+        <div className="text-right" role="status" aria-live="polite">
           <div className="font-mono text-2xl font-bold text-[#00FFA3] drop-shadow-[0_0_8px_rgba(0,255,163,0.5)]">{xp}</div>
           <div className="font-mono text-[10px] font-bold tracking-widest text-muted">TOTAL XP</div>
         </div>
       </div>
 
       {/* Question Area */}
-      <div className="flex-1 flex flex-col justify-center">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-10 leading-snug">
+      <main className="flex-1 flex flex-col justify-center">
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-10 leading-snug" tabIndex={0}>
           {question.question}
         </h2>
 
@@ -210,7 +210,7 @@ export default function QuizArena() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
