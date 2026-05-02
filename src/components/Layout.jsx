@@ -37,13 +37,14 @@ export default function Layout() {
               <Link
                 key={item.id}
                 to={item.id}
+                aria-label={item.label}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-mono text-xs font-bold tracking-wide transition-all ${
                   active 
                     ? "bg-primary/10 text-primary border border-primary/30 shadow-[0_0_12px_rgba(0,255,163,0.1)]" 
                     : "text-muted hover:text-white hover:bg-white/5 border border-transparent"
                 }`}
               >
-                <Icon size={16} className={active ? "text-primary" : "text-muted"} />
+                <Icon size={16} className={active ? "text-primary" : "text-muted"} aria-hidden="true" />
                 {item.label}
               </Link>
             );

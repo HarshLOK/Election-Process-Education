@@ -15,4 +15,6 @@ RUN npm run build
 RUN npm install -g serve
 
 # Serve the 'dist' directory on the port provided by Google Cloud Run
+# We copy serve.json into dist so that the serve package uses the security headers
+RUN cp serve.json dist/serve.json
 CMD ["serve", "-s", "dist"]

@@ -134,7 +134,7 @@ function StatCard({ label, value, color }) {
   };
   
   return (
-    <div className={`p-5 border rounded-xl ${colors[color]} relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg`}>
+    <div role="article" aria-label={`${label}: ${value}`} className={`p-5 border rounded-xl ${colors[color]} relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg`}>
       <div className="font-display text-2xl font-bold z-10 relative drop-shadow-md">{value}</div>
       <div className="font-mono text-[10px] text-muted tracking-wider mt-1 z-10 relative">{label}</div>
     </div>
@@ -164,7 +164,7 @@ function JourneyCard({ phase, title, desc, link, color, disabled }) {
   }
 
   return (
-    <Link to={link} className={`block p-6 border rounded-xl bg-card transition-all duration-300 ${c.border} ${c.hover} group relative overflow-hidden`}>
+    <Link to={link} aria-label={`Start Phase ${phase}: ${title}`} className={`block p-6 border rounded-xl bg-card transition-all duration-300 ${c.border} ${c.hover} group relative overflow-hidden`}>
       <div className="absolute -right-10 -top-10 w-32 h-32 bg-current opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity"></div>
       <div className={`font-mono text-xs font-bold tracking-widest mb-2 ${c.text}`}>PHASE {phase}</div>
       <h3 className="font-sans text-xl font-bold text-white mb-2">{title}</h3>
